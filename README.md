@@ -1,5 +1,6 @@
 # WxRedPack
 微信红包(wechat redpack api) php版，基于官方的rest api做了封装和测试，避了一些坑
+调用者只需要引入工程的WxRedPackHelper.php，其余的WxPayApi直接使用微信官方的支付api代码即可。
 
 # 以下是示例
 
