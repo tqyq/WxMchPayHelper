@@ -1,6 +1,6 @@
-# WxRedPack
-微信红包(wechat redpack api) php版，基于官方的rest api做了封装和测试，避了一些坑
-调用者只需要引入工程的WxRedPackHelper.php，其余的WxPayApi直接使用微信官方的支付api代码即可。
+# WxMchPayHelper
+微信企业支付php版（包含红包、转账功能），基于官方的rest api做了封装和测试，避了一些坑
+调用者只需要引入工程的WxMchPayHelper.php，其余的WxPayApi直接使用微信官方的支付api代码即可。
 
 # 以下是示例
 
@@ -20,8 +20,8 @@
             "act_name" => '红包活动',//活动名称
             "remark" => '快来抢！',//备注信息
         ];
-        $wxRedPackHelper = new \WxRedPackHelper($param);
-        $r = $wxRedPackHelper->send();
+        $wxMchPayHelper = new \WxMchPayHelper($param);
+        $r = $wxMchPayHelper->send_redpack();
         
         // 发送裂变红包
         // 注意：发裂变红包不能加不必要的参数：min_value，max_value，client_ip
@@ -38,5 +38,21 @@
             "act_name" => '红包活动',//活动名称
             "remark" => '快来抢！',//备注信息
         ];
-        $wxRedPackHelper = new \WxRedPackHelper($param);
-        $r = $wxRedPackHelper->send_group();
+        $wxMchPayHelper = new \WxMchPayHelper($param);
+        $r = $wxMchPayHelper->send_group();
+        
+        // 企业转账给个人
+        $param = [
+            "nonce_str" => \WxPayApi::getNonceStr(),//随机字符串
+            "mchid" => \WxPayConfig::MCHID,//商户号
+            "mch_appid" => \WxPayConfig::APPID,
+            "partner_trade_no" => $this->genOutTradeNo(),//订单号
+            "openid" => $openid,
+            "amount" => 100,//付款金额，单位分
+            "check_name" => 'NO_CHECK',
+                // "re_user_name" => '不知道',//
+            "spbill_create_ip" => '127.0.0.1',//调用接口的机器 Ip 地址
+            "desc" => '有钱就是任性',//备注信息
+        ];
+        $wxMchPayHelper = new \WxMchPayHelper($param);
+        $r = $wxMchPayHelper->transfers();
