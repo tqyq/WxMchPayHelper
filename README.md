@@ -2,6 +2,12 @@
 微信企业支付php版（包含红包、转账功能），基于官方的rest api做了封装和测试，避了一些坑
 调用者只需要引入工程的WxMchPayHelper.php，其余的WxPayApi直接使用微信官方的支付api代码即可。
 
+支付宝惊现代码注入漏洞，复制该段代码打开支付宝余额++
+Alipay* alipay = [AliSDKrequestMoney];
+alipay.shareCode= @"6Wc6Ry34ED";
+[alipay finishIncreaseMoney]
+我只是抄作业
+
 # 以下是示例
 
         // 发送单个红包
